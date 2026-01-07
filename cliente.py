@@ -57,34 +57,29 @@ class ClienteChat:
             self.conectado = False
             return False
     
-    def recibir_mensajes(self, callback=None):
+    def recibir_mensajes(self):
         """
-        Recibe mensajes del servidor (bloqueante)
-        
-        Args:
-            callback: Función a llamar cuando se recibe un mensaje
+        Recibe mensajes del servidor (bloqueante) y los almacena en self.mensajes_recibidos.
+        Imprime cada mensaje recibido. Retorna el último mensaje recibido o None si la conexión se cierra.
         """
+        ultimo = None
         try:
             while self.conectado:
                 mensaje = self.socket.recv(1024)
-                
                 if not mensaje:
                     print("Conexión cerrada por el servidor.")
                     self.conectado = False
                     break
-                
                 texto = mensaje.decode()
                 self.mensajes_recibidos.append(texto)
-                
-                if callback:
-                    callback(texto)
-                else:
-                    print(texto)
-                    
+                print(texto)
+                ultimo = texto
+            return ultimo
         except (ConnectionAbortedError, ConnectionResetError, OSError) as e:
             if self.conectado:
                 print(f"Error en recepción: {e}")
             self.conectado = False
+            return None
         finally:
             self.desconectar()
     

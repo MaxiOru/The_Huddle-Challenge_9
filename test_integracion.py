@@ -1,13 +1,9 @@
 """
-TESTS DE INTEGRACIÓN - Server y Cliente Refactorizados
-=======================================================
-Pruebas de integración para las versiones refactorizadas
+TEST DE INTEGRACIÓN - Servidor y Cliente
 
-Cubre:
 - Conexión real cliente-servidor
 - Envío y recepción de mensajes
 - Broadcast a múltiples clientes simultáneos
-- Comunicación bidireccional con callbacks
 """
 
 import pytest
@@ -20,15 +16,15 @@ from cliente import ClienteChat
 
 def test_integracion_broadcast_multiples_clientes():
     """
-    INTEGRACIÓN: Servidor hace broadcast a múltiples clientes conectados
-    
+    INTEGRACIÓN: El servidor hace broadcast a múltiples clientes conectados.
+
     Flujo:
     1. Conectar 3 clientes
     2. Cliente 1 envía mensaje
     3. Servidor hace broadcast
-    4. Clientes 2 y 3 reciben el mensaje
-    
-    Integra: ServidorChat.broadcast() + handle_cliente() + ClienteChat conexión real
+    4. Clientes 2 y 3 reciben el mensaje directamente
+
+    Integra: ServidorChat.broadcast(), handle_cliente() y ClienteChat 
     """
     # Iniciar servidor
     servidor = ServidorChat(host='127.0.0.1', port=55125)
@@ -50,39 +46,19 @@ def test_integracion_broadcast_multiples_clientes():
     # Verificar que servidor tiene 3 clientes
     assert len(servidor.clientes) == 3
     
-    # Iniciar recepción en clientes 2 y 3
-    mensajes_c2 = []
-    mensajes_c3 = []
-    
-    def callback_c2(msg):
-        mensajes_c2.append(msg)
-    
-    def callback_c3(msg):
-        mensajes_c3.append(msg)
-    
-    thread_c2 = threading.Thread(target=cliente2.recibir_mensajes, args=(callback_c2,), daemon=True)
-    thread_c3 = threading.Thread(target=cliente3.recibir_mensajes, args=(callback_c3,), daemon=True)
-    thread_c2.start()
-    thread_c3.start()
-    time.sleep(0.3)
-    
     # Cliente 1 envía mensaje
     cliente1.enviar_mensaje("Mensaje de broadcast")
-    time.sleep(1.5)
-    
-    # Verificar que clientes 2 y 3 recibieron el mensaje
-    assert len(mensajes_c2) > 0, "Cliente 2 debería recibir mensajes"
-    assert len(mensajes_c3) > 0, "Cliente 3 debería recibir mensajes"
-    
-    # Verificar que el mensaje llegó
-    mensajes_c2_str = ' '.join(mensajes_c2)
-    mensajes_c3_str = ' '.join(mensajes_c3)
-    
-    assert "Mensaje de broadcast" in mensajes_c2_str
-    assert "Mensaje de broadcast" in mensajes_c3_str
-    
-    print(f"✓ Broadcast exitoso - Cliente 2 recibió {len(mensajes_c2)} mensajes")
-    print(f"✓ Broadcast exitoso - Cliente 3 recibió {len(mensajes_c3)} mensajes")
+    time.sleep(1.0)
+
+    # Recibir mensajes en clientes 2 y 3
+    recibido_c2 = cliente2.recibir_mensajes()
+    recibido_c3 = cliente3.recibir_mensajes()
+
+    assert recibido_c2 and "Mensaje de broadcast" in recibido_c2, "Cliente 2 no recibió el mensaje de broadcast"
+    assert recibido_c3 and "Mensaje de broadcast" in recibido_c3, "Cliente 3 no recibió el mensaje de broadcast"
+
+    print(f"✓ Broadcast exitoso - Cliente 2 recibió: {recibido_c2}")
+    print(f"✓ Broadcast exitoso - Cliente 3 recibió: {recibido_c3}")
     
     # Cleanup
     cliente1.desconectar()
@@ -91,10 +67,6 @@ def test_integracion_broadcast_multiples_clientes():
     time.sleep(0.5)
     servidor.detener()
 
-
-# ============================================================================
-# EJECUCIÓN
-# ============================================================================
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "-s"])

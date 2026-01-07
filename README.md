@@ -16,7 +16,6 @@ El proyecto está diseñado con **enfoque en testing**, siguiendo metodologías 
 - ✅ **Broadcast de mensajes:** Los mensajes se distribuyen a todos los clientes conectados
 - ✅ **Validación de mensajes:** Rechaza mensajes vacíos o inválidos
 - ✅ **Manejo de desconexiones:** Detecta y gestiona desconexiones inesperadas sin afectar a otros usuarios
-- ✅ **Comunicación bidireccional:** Envío y recepción de mensajes en tiempo real
 - ✅ **Gestión de clientes:** Añade y remueve clientes automáticamente
 
 ### Objetivo de Testing
@@ -116,7 +115,6 @@ pytest test_tdd.py -v
 
 - Sockets TCP/IP reales (puerto 55125)
 - Threading concurrente (múltiples hilos simultáneos)
-- Callbacks para comunicación asíncrona
 
 **Escenarios probados:**
 

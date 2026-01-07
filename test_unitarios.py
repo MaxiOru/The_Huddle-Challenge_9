@@ -1,11 +1,7 @@
-"""TESTS UNITARIOS - Servidor Refactorizado
-==========================================
-Pruebas unitarias para server_refac.py
+"""TESTS UNITARIOS 
 
-Cubre:
-- Validación de mensajes
-- Gestión de clientes (agregar, remover, contar)
-- Broadcast básico
+- Validación de mensajes, Gestión de clientes (agregar, remover, contar) y Broadcast básico
+
 """
 
 import pytest
@@ -13,14 +9,14 @@ from unittest.mock import Mock
 from server import ServidorChat
 
 
+"""validar_mensaje() acepta mensajes con texto"""
 def test_validar_mensaje_acepta_texto_valido():
-    """validar_mensaje() acepta mensajes con texto"""
     servidor = ServidorChat()
     assert servidor.validar_mensaje("Hola") == True
     assert servidor.validar_mensaje("Mensaje con espacios") == True
 
+"""validar_mensaje() rechaza mensajes vacíos"""
 def test_validar_mensaje_rechaza_vacios():
-    """validar_mensaje() rechaza mensajes vacíos"""
     servidor = ServidorChat()
     assert servidor.validar_mensaje("") == False
     assert servidor.validar_mensaje("   ") == False
