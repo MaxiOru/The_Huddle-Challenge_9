@@ -29,10 +29,7 @@ def test_broadcast_no_falla_con_cliente_desconectado():
     
     # Ejecutar broadcast (NO debe lanzar excepción)
     mensaje = "Mensaje de prueba".encode()
-    try:
-        enviados = servidor.broadcast(mensaje)
-    except Exception as e:
-        pytest.fail(f"broadcast() no debe lanzar excepción, pero lanzó: {e}")
+    enviados = servidor.broadcast(mensaje)
     
     # Verificar que cliente1 y cliente3 SÍ recibieron el mensaje
     cliente1.send.assert_called_once_with(mensaje)
