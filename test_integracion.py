@@ -1,9 +1,5 @@
 """
 TEST DE INTEGRACIÓN - Servidor y Cliente
-
-- Conexión real cliente-servidor
-- Envío y recepción de mensajes
-- Broadcast a múltiples clientes simultáneos
 """
 
 import pytest
