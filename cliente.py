@@ -7,8 +7,6 @@ class ClienteChat:
     
     def __init__(self, host='127.0.0.1', port=55123):
         """
-        Inicializa el cliente
-        
         Args:
             host: IP del servidor
             port: Puerto del servidor
@@ -21,8 +19,6 @@ class ClienteChat:
     
     def conectar(self):
         """
-        Conecta al servidor
-        
         Returns:
             bool: True si conectó exitosamente, False si falló
         """
@@ -38,11 +34,8 @@ class ClienteChat:
     
     def enviar_mensaje(self, mensaje):
         """
-        Envía un mensaje al servidor
-        
         Args:
             mensaje (str): Mensaje a enviar
-        
         Returns:
             bool: True si se envió exitosamente
         """

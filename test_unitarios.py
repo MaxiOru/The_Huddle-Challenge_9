@@ -1,13 +1,10 @@
 """TESTS UNITARIOS 
-
-- Validación de mensajes, Gestión de clientes (agregar, remover, contar) y Broadcast básico
+Validación de mensajes, Gestión de clientes (agregar, remover, contar) y Broadcast básico
 
 """
-
 import pytest
 from unittest.mock import Mock
 from server import ServidorChat
-
 
 """validar_mensaje() acepta mensajes con texto"""
 def test_validar_mensaje_acepta_texto_valido():
@@ -23,8 +20,8 @@ def test_validar_mensaje_rechaza_vacios():
     assert servidor.validar_mensaje(None) == False
 
 
+"""agregar_cliente() añade cliente a la lista"""
 def test_agregar_cliente():
-    """agregar_cliente() añade cliente a la lista"""
     servidor = ServidorChat()
     cliente_mock = Mock()
     assert len(servidor.clientes) == 0
@@ -32,18 +29,9 @@ def test_agregar_cliente():
     assert len(servidor.clientes) == 1
     assert cliente_mock in servidor.clientes
 
-def test_remover_cliente():
-    """remover_cliente() elimina cliente de la lista"""
-    servidor = ServidorChat()
-    cliente_mock = Mock()
-    servidor.agregar_cliente(cliente_mock)
-    servidor.remover_cliente(cliente_mock)
-    assert len(servidor.clientes) == 0
-    assert cliente_mock not in servidor.clientes
-    cliente_mock.close.assert_called_once()
 
+"""broadcast() envía mensaje a todos los clientes"""
 def test_broadcast_envia_a_todos_los_clientes():
-    """broadcast() envía mensaje a todos los clientes"""
     servidor = ServidorChat()
     cliente1, cliente2, cliente3 = Mock(), Mock(), Mock()
     servidor.agregar_cliente(cliente1)

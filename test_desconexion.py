@@ -1,21 +1,11 @@
 """
-PRUEBAS DE DESCONEXIÓN INESPERADA - Versión Refactorizada
-===========================================================
-Pruebas que verifican el manejo de desconexiones inesperadas 
-en ServidorChat (server_refac.py)
-
+Pruebas que verifican el manejo de desconexiones en ServidorChat (server.py)
 Funciones probadas: ServidorChat.broadcast(), ServidorChat.remover_cliente()
 """
 
 import pytest
 from unittest.mock import Mock
 from server import ServidorChat
-
-# ============================================================================
-# PRUEBAS DE DESCONEXIÓN INESPERADA
-# ============================================================================
-# Clase probada: ServidorChat
-# Métodos probados: broadcast(), remover_cliente()
 
 def test_broadcast_no_falla_con_cliente_desconectado():
     """
@@ -26,7 +16,6 @@ def test_broadcast_no_falla_con_cliente_desconectado():
     """
     servidor = ServidorChat()
     
-    # Crear 3 clientes
     cliente1 = Mock()
     cliente2 = Mock()  # Este va a fallar
     cliente3 = Mock()
