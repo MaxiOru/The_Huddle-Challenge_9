@@ -100,7 +100,7 @@ class ClienteChat:
                 pass
 
 
-# Modo standalone (compatible con versión original)
+
 if __name__ == "__main__":
     cliente = ClienteChat()
     

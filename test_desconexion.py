@@ -39,7 +39,7 @@ def test_broadcast_no_falla_con_cliente_desconectado():
     servidor.clientes = [cliente1, cliente2, cliente3]
     
     # Ejecutar broadcast (NO debe lanzar excepción)
-    mensaje = b"Mensaje de prueba"
+    mensaje = "Mensaje de prueba".encode()
     try:
         enviados = servidor.broadcast(mensaje)
     except Exception as e:

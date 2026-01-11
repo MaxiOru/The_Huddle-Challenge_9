@@ -50,7 +50,7 @@ def test_broadcast_envia_a_todos_los_clientes():
     servidor.agregar_cliente(cliente2)
     servidor.agregar_cliente(cliente3)
     
-    mensaje = b"Mensaje de prueba"
+    mensaje = "Mensaje de prueba".encode()
     enviados = servidor.broadcast(mensaje)
     
     cliente1.send.assert_called_once_with(mensaje)
