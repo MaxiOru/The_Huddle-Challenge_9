@@ -15,7 +15,7 @@ def test_broadcast_no_falla_con_cliente_desconectado():
                 la transmisión no causan errores en el sistema"
     """
     servidor = ServidorChat()
-    
+
     cliente1 = Mock()
     cliente2 = Mock()  # Este va a fallar
     cliente3 = Mock()
@@ -39,11 +39,11 @@ def test_broadcast_no_falla_con_cliente_desconectado():
     cliente3.send.assert_called_once_with(mensaje)
     
     # Verificar que cliente2 fue removido de la lista
-    assert cliente2 not in servidor.clientes, "Cliente con error debe ser removido"
-    assert len(servidor.clientes) == 2, "Solo deben quedar 2 clientes"
-    
+    assert cliente2 not in servidor.clientes
+    assert len(servidor.clientes) == 2 
+
     # Verificar que se retornó el número correcto de envíos exitosos
-    assert enviados == 2, "Deben haberse enviado 2 mensajes exitosamente"
+    assert enviados == 2
 
 
 if __name__ == "__main__":
